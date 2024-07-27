@@ -1,32 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect } from 'react';
 
-import { useGeolocation } from "./hooks/useGeolocation";
+import { useGeolocation } from './hooks/useGeolocation';
 
-import Container from "./ui/Container";
-import Loading from "./ui/Loading";
-
-import Forecast from "./features/forecast/Forecast";
-import Home from "./features/home/Home";
+import Forecast from './features/forecast/Forecast';
+import Home from './features/home/Home';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AppLayout from './ui/AppLayout';
 
 function App() {
   const { getCurrentLocation, isLoading, position } = useGeolocation();
-
-  const [isHome, setIsHome] = useState(true);
 
   useEffect(() => {
     getCurrentLocation();
   }, []);
 
   return (
-    <Container>
-      {isLoading ? (
-        <Loading />
-      ) : isHome ? (
-        <Home setIsHome={setIsHome} position={position} />
-      ) : (
-        <Forecast setIsHome={setIsHome} position={position} />
-      )}
-    </Container>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AppLayout isLoading={isLoading} />}>
+          <Route path="/" element={<Home position={position} />} />
+          <Route path="/forecast" element={<Forecast position={position} />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

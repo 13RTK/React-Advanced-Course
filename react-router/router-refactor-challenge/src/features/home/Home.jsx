@@ -1,14 +1,17 @@
-import { Button } from "@mui/material";
+import { Button } from '@mui/material';
 
-import styles from "./Home.module.css";
+import styles from './Home.module.css';
 
-import { useCurrentWeather } from "../../hooks/useCurrentWeather";
+import { useCurrentWeather } from '../../hooks/useCurrentWeather';
 
-import Day from "./Day";
-import Loading from "../../ui/Loading";
+import Day from './Day';
+import Loading from '../../ui/Loading';
+import { useNavigate } from 'react-router-dom';
 
-function Home({ setIsHome, position }) {
+function Home({ position }) {
   const { temperature, weatherIcon, isLoading } = useCurrentWeather(position);
+
+  const navigate = useNavigate();
 
   return (
     <section className={styles.section}>
@@ -19,7 +22,7 @@ function Home({ setIsHome, position }) {
           <Button
             variant="contained"
             size="large"
-            onClick={() => setIsHome(false)}
+            onClick={() => navigate('/forecast')}
           >
             Get Start
           </Button>
