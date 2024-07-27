@@ -1,10 +1,10 @@
-import { useForecastWeather } from "../../hooks/useForecastWeather";
+import { useForecastWeather } from '../../hooks/useForecastWeather';
 
-import Loading from "../../ui/Loading";
-import AppNav from "./AppNav";
-import ForecastList from "./ForecastList";
+import Loading from '../../ui/Loading';
+import AppNav from './AppNav';
+import ForecastList from './ForecastList';
 
-function Forecast({ setIsHome, position }) {
+function Forecast({ position }) {
   const { weatherForecastList, isLoading } = useForecastWeather(position);
 
   return (
@@ -12,7 +12,7 @@ function Forecast({ setIsHome, position }) {
       {isLoading && <Loading />}
       {!isLoading && (
         <>
-          <AppNav setIsHome={setIsHome} />
+          <AppNav />
 
           <ForecastList weatherForecastList={weatherForecastList} />
         </>
