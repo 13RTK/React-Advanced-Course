@@ -1,11 +1,29 @@
+import { useEffect, useState } from 'react';
 import { Menubar } from 'primereact/menubar';
 import { InputText } from 'primereact/inputtext';
 import { Badge } from 'primereact/badge';
 import { Button } from 'primereact/button';
-import { useToggleTheme } from './useToggleTheme';
+import { useSelector } from 'react-redux';
 
-export default function NavBar() {
-  const { currentTheme, toggleTheme } = useToggleTheme();
+export default function NavBar({ setVisible }) {
+  const [currentTheme, setCurrentTheme] = useState('light');
+
+  const cartList = useSelector((state) => state.cartList);
+  const cartListCount = cartList.length;
+
+  function toggleTheme() {
+    setCurrentTheme(currentTheme === 'light' ? 'dark' : 'light');
+  }
+
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `/themes/lara-${currentTheme}-cyan/theme.css`;
+    document.head.appendChild(link);
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, [currentTheme]);
 
   const itemRenderer = (item) => (
     <a className="flex align-items-center p-menuitem-link">
@@ -19,12 +37,16 @@ export default function NavBar() {
       )}
     </a>
   );
+
   const items = [
     {
       label: 'Cart',
       icon: 'pi pi-shopping-cart',
-      badge: 3,
+      badge: cartListCount,
       template: itemRenderer,
+      command: () => {
+        setVisible(true);
+      },
     },
   ];
 
@@ -45,6 +67,7 @@ export default function NavBar() {
       />
       <Button
         icon={`pi ${currentTheme === 'light' ? 'pi-sun' : 'pi-moon'}`}
+        style={{ marginLeft: '0.5rem' }}
         onClick={toggleTheme}
       />
     </div>

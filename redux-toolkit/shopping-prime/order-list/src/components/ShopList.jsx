@@ -6,8 +6,32 @@ import { Tag } from 'primereact/tag';
 import { classNames } from 'primereact/utils';
 import { ProductService } from '../services/ProductService';
 
-export default function PaginationDemo() {
+import { useLocalStorage } from 'react-use';
+import { useDispatch } from 'react-redux';
+import { append } from './cartListSlice';
+import { isExistItem } from '../utils/arrayHelper';
+
+import { show } from '../utils/toastHelper';
+
+export default function ShopList({ toast }) {
   const [products, setProducts] = useState([]);
+
+  const [cartList, setCartList] = useLocalStorage('cart-list', []);
+  const dispatch = useDispatch();
+
+  function addToCart(product) {
+    if (isExistItem(product, cartList)) {
+      show(toast, 'error');
+      return;
+    }
+
+    const newCartList = [...cartList, product];
+
+    setCartList(newCartList);
+    dispatch(append(product));
+
+    show(toast);
+  }
 
   useEffect(() => {
     ProductService.getProducts().then((data) => setProducts(data));
@@ -64,6 +88,15 @@ export default function PaginationDemo() {
                 icon="pi pi-shopping-cart"
                 className="p-button-rounded"
                 disabled={product.inventoryStatus === 'OUTOFSTOCK'}
+                onClick={() =>
+                  addToCart({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    category: product.category,
+                  })
+                }
               ></Button>
             </div>
           </div>

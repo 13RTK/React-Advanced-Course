@@ -4,18 +4,19 @@ import App from './App.jsx';
 
 import { PrimeReactProvider } from 'primereact/api';
 
-// import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import 'primeicons/primeicons.css';
-import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
+import 'primereact/resources/primereact.css';
 
-import './flags.css';
-import './index.css';
+import { Provider } from 'react-redux';
+import { store } from './app/store.js';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <PrimeReactProvider>
-      <App />
-    </PrimeReactProvider>
+    <Provider store={store}>
+      <PrimeReactProvider>
+        <App />
+      </PrimeReactProvider>
+    </Provider>
   </StrictMode>
 );
