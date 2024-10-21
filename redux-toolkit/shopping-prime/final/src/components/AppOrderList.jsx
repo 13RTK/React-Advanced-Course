@@ -4,10 +4,6 @@ import { OrderList } from 'primereact/orderlist';
 export default function AppOrderList() {
   const [products, setProducts] = useLocalStorage('cart-list', []);
 
-  // useEffect(() => {
-  //   ProductService.getProductsSmall().then((data) => setProducts(data));
-  // }, []);
-
   const itemTemplate = (item) => {
     return (
       <div className="flex flex-wrap p-2 align-items-center gap-3">

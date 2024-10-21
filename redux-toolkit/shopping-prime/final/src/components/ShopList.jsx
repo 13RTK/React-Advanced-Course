@@ -2,56 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'primereact/button';
 import { DataView } from 'primereact/dataview';
 import { Rating } from 'primereact/rating';
-import { Tag } from 'primereact/tag';
 import { classNames } from 'primereact/utils';
+
 import { ProductService } from '../services/ProductService';
 
-import { useLocalStorage } from 'react-use';
-import { useDispatch } from 'react-redux';
-import { append } from './cartListSlice';
-import { isExistItem } from '../utils/arrayHelper';
-
-import { show } from '../utils/toastHelper';
+import { useCartList } from './useCartList';
 
 export default function ShopList({ toast }) {
   const [products, setProducts] = useState([]);
 
-  const [cartList, setCartList] = useLocalStorage('cart-list', []);
-  const dispatch = useDispatch();
-
-  function addToCart(product) {
-    if (isExistItem(product, cartList)) {
-      show(toast, 'error');
-      return;
-    }
-
-    const newCartList = [...cartList, product];
-
-    setCartList(newCartList);
-    dispatch(append(product));
-
-    show(toast);
-  }
+  const { appendProduct } = useCartList(toast);
 
   useEffect(() => {
     ProductService.getProducts().then((data) => setProducts(data));
   }, []);
-
-  const getSeverity = (product) => {
-    switch (product.inventoryStatus) {
-      case 'INSTOCK':
-        return 'success';
-
-      case 'LOWSTOCK':
-        return 'warning';
-
-      case 'OUTOFSTOCK':
-        return 'danger';
-
-      default:
-        return null;
-    }
-  };
 
   const itemTemplate = (product, index) => {
     return (
@@ -76,10 +40,6 @@ export default function ShopList({ toast }) {
                   <i className="pi pi-tag"></i>
                   <span className="font-semibold">{product.category}</span>
                 </span>
-                <Tag
-                  value={product.inventoryStatus}
-                  severity={getSeverity(product)}
-                ></Tag>
               </div>
             </div>
             <div className="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
@@ -87,9 +47,8 @@ export default function ShopList({ toast }) {
               <Button
                 icon="pi pi-shopping-cart"
                 className="p-button-rounded"
-                disabled={product.inventoryStatus === 'OUTOFSTOCK'}
                 onClick={() =>
-                  addToCart({
+                  appendProduct({
                     id: product.id,
                     name: product.name,
                     price: product.price,

@@ -1,40 +1,22 @@
-import { useEffect, useState } from 'react';
 import { Menubar } from 'primereact/menubar';
 import { InputText } from 'primereact/inputtext';
 import { Badge } from 'primereact/badge';
 import { Button } from 'primereact/button';
-import { useSelector } from 'react-redux';
+
+import { useToggleTheme } from './useToggleTheme';
+import { useCartList } from './useCartList';
 
 export default function NavBar({ setVisible }) {
-  const [currentTheme, setCurrentTheme] = useState('light');
+  const { cartListStore } = useCartList();
+  const cartListCount = cartListStore.length;
 
-  const cartList = useSelector((state) => state.cartList);
-  const cartListCount = cartList.length;
-
-  function toggleTheme() {
-    setCurrentTheme(currentTheme === 'light' ? 'dark' : 'light');
-  }
-
-  useEffect(() => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = `/themes/lara-${currentTheme}-cyan/theme.css`;
-    document.head.appendChild(link);
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, [currentTheme]);
+  const { currentTheme, toggleTheme } = useToggleTheme();
 
   const itemRenderer = (item) => (
     <a className="flex align-items-center p-menuitem-link">
       <span className={item.icon} />
       <span className="mx-2">{item.label}</span>
       {item.badge && <Badge className="ml-auto" value={item.badge} />}
-      {item.shortcut && (
-        <span className="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">
-          {item.shortcut}
-        </span>
-      )}
     </a>
   );
 

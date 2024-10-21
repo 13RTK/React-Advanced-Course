@@ -6,19 +6,19 @@ import ShopList from './components/ShopList';
 
 import { Toast } from 'primereact/toast';
 
-import { useDispatch } from 'react-redux';
-import { load } from './components/cartListSlice';
 import { useLocalStorage } from 'react-use';
+import { useCartList } from './components/useCartList';
 
 export default function App() {
   const [visible, setVisible] = useState(false);
 
   const toast = useRef(null);
-  const dispatch = useDispatch();
+
+  const { loadFromLocalStorage } = useCartList();
   const [cartList] = useLocalStorage('cart-list', []);
 
   useEffect(() => {
-    dispatch(load(cartList));
+    loadFromLocalStorage(cartList);
   }, []);
 
   return (
