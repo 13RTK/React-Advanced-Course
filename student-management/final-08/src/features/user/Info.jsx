@@ -5,8 +5,8 @@ function Info() {
     'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'
   );
 
-  function handleAvatarChange(e) {
-    const file = e.target.files[0];
+  function handleAvatarChange(event) {
+    const file = event.target.files[0];
 
     const newAvatarUrl = URL.createObjectURL(file);
     setCurrentAvatarUrl(newAvatarUrl);
@@ -14,8 +14,7 @@ function Info() {
 
   return (
     <div className="w-1/3 mx-auto shadow-2xl shadow-blue-300 rounded-box mt-40">
-      {/* Avatar */}
-      <div className="avatar my-4 flex justify-center">
+      <div className="avatar mt-4 flex justify-center">
         <div className="w-24 rounded-full ">
           <label className="cursor-pointer" htmlFor="avatar-input">
             <img src={currentAvatarUrl} />
@@ -23,13 +22,12 @@ function Info() {
         </div>
       </div>
 
-      {/* image input */}
       <input
-        type="file"
         id="avatar-input"
-        className="hidden"
+        type="file"
         accept="image/*"
         onChange={handleAvatarChange}
+        className="hidden"
       />
 
       <div className="w-3/4 mx-auto">
@@ -51,10 +49,10 @@ function Info() {
               <summary>Class In Charge</summary>
               <ul>
                 <li>
-                  <a className="pointer-events-none">Class 1 | Year 8</a>
+                  <a className="pointer-events-none">Class 10 | Year 9</a>
                 </li>
                 <li>
-                  <a className="pointer-events-none">Class 10 | Year 2</a>
+                  <a className="pointer-events-none">Class 11 | Year 10</a>
                 </li>
               </ul>
             </details>
@@ -63,10 +61,9 @@ function Info() {
       </div>
 
       <div className="text-center">
-        <button className="btn btn-primary my-4 btn-wide">Update Avatar</button>
+        <button className="btn btn-primary my-2">Update Avatar</button>
       </div>
     </div>
   );
 }
-
 export default Info;
