@@ -14,7 +14,7 @@ function Info() {
 
   return (
     <div className="w-1/3 mx-auto shadow-2xl shadow-blue-300 rounded-box mt-40">
-      <div className="avatar mt-4 flex justify-center">
+      <div className="avatar pt-4 flex justify-center">
         <div className="w-24 rounded-full ">
           <label className="cursor-pointer" htmlFor="avatar-input">
             <img src={currentAvatarUrl} />
