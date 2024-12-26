@@ -1,19 +1,37 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { toast } from 'sonner';
 
 import {
   getStudentByStudentId,
   updateStudent,
 } from '../../services/apiStudent';
 import { uploadAvatar } from '../../services/apiStorage';
-import { toast } from 'sonner';
 
 import { getConfig } from '../../utils/configHelper';
 import Loading from '../../ui/Loading';
+import ErrorMessage from '../../ui/ErrorMessage';
 
 function StudentEdit() {
-  const [name, setName] = useState('Alex');
   const [gender, setGender] = useState('male');
+  const [name, setName] = useState('Someone');
+
+  const validationSchema = yup
+    .object({
+      name: yup.string().required(),
+    })
+    .required();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -50,7 +68,7 @@ function StudentEdit() {
     fetchData();
   }, []);
 
-  async function onClick() {
+  async function onSubmit({ name }) {
     toast.loading('Updating...');
 
     const newStudent = {
@@ -88,7 +106,10 @@ function StudentEdit() {
     <>
       {isLoading && <Loading />}
       {!isLoading && (
-        <div className="w-1/3 mx-auto shadow-2xl shadow-blue-300 rounded-box mt-40">
+        <form
+          className="w-1/3 mx-auto shadow-2xl shadow-blue-300 rounded-box mt-40"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="avatar pt-4 flex justify-center">
             <div className="w-24 rounded-full ">
               <label className="cursor-pointer" htmlFor="avatar-input">
@@ -111,9 +132,12 @@ function StudentEdit() {
               <input
                 type="text"
                 className="grow"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                defaultValue={name}
+                {...register('name')}
               />
+              {errors.name && (
+                <ErrorMessage>{errors.name?.message}</ErrorMessage>
+              )}
             </label>
 
             <select
@@ -128,11 +152,9 @@ function StudentEdit() {
           </div>
 
           <div className="text-center">
-            <button className="btn btn-primary my-2" onClick={onClick}>
-              Update Profile
-            </button>
+            <button className="btn btn-primary my-2">Update Profile</button>
           </div>
-        </div>
+        </form>
       )}
     </>
   );

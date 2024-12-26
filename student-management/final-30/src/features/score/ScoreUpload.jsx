@@ -1,18 +1,40 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { toast } from 'sonner';
 
 import { getUserId } from '../../utils/userHelper';
 import { getStudentList } from '../../services/apiStudent';
 import { createScore } from '../../services/apiScore';
 
-import { toast } from 'sonner';
-
+import ErrorMessage from '../../ui/ErrorMessage';
 import Loading from '../../ui/Loading';
 
 function ScoreUpload() {
   const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
+
+  const validationSchema = yup
+    .object({
+      score: yup
+        .number()
+        .typeError('Please type correct number')
+        .integer()
+        .positive()
+        .max(100),
+    })
+    .required();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
   const [students, setStudents] = useState([]);
   const [currentStudent, setCurrentStudent] = useState({
@@ -22,7 +44,7 @@ function ScoreUpload() {
     grade: 'x',
   });
 
-  const [score, setScore] = useState(80);
+  const [score] = useState(80);
 
   const [subject, setSubject] = useState('Mathematics');
 
@@ -49,7 +71,7 @@ function ScoreUpload() {
     fetchData();
   }, []);
 
-  async function onClick() {
+  async function onSubmit({ score }) {
     toast.loading('Creating...');
 
     const newScore = {
@@ -73,7 +95,10 @@ function ScoreUpload() {
     <>
       {isLoading && <Loading />}
       {!isLoading && (
-        <div className="w-1/3 mx-auto shadow-2xl shadow-blue-300 rounded-box mt-40">
+        <form
+          className="w-1/3 mx-auto shadow-2xl shadow-blue-300 rounded-box mt-40"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="w-3/4 mx-auto pt-4">
             <select
               className="select select-bordered w-full mb-2"
@@ -119,9 +144,12 @@ function ScoreUpload() {
               <input
                 type="number"
                 className="grow"
-                value={score}
-                onChange={(e) => setScore(Number(e.target.value))}
+                defaultValue={score}
+                {...register('score')}
               />
+              {errors.score && (
+                <ErrorMessage>{errors.score?.message}</ErrorMessage>
+              )}
             </label>
 
             <select
@@ -164,11 +192,9 @@ function ScoreUpload() {
           </div>
 
           <div className="text-center">
-            <button className="btn btn-primary my-2" onClick={onClick}>
-              Upload Score
-            </button>
+            <button className="btn btn-primary my-2">Upload Score</button>
           </div>
-        </div>
+        </form>
       )}
     </>
   );

@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 import { getConfig } from '../../utils/configHelper';
 
@@ -9,16 +12,29 @@ import { signup } from '../../services/apiAuth';
 import { toast } from 'sonner';
 
 import Loading from '../../ui/Loading';
+import ErrorMessage from '../../ui/ErrorMessage';
 
 function StudentCreate() {
   const navigate = useNavigate();
 
+  const validationSchema = yup
+    .object({
+      email: yup.string().required().email(),
+      name: yup.string().required(),
+    })
+    .required();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+
   const [isLoading, setIsLoading] = useState(true);
-  const [name, setName] = useState('Someone');
-  const [email, setEmail] = useState('something@example.com');
 
   const [teacherId, setTeacherId] = useState('');
-
   const [classInChargeArr, setClassInChargeArr] = useState([]);
 
   const [classInfo, setClassInfo] = useState('x|x');
@@ -50,7 +66,7 @@ function StudentCreate() {
     fetchData();
   }, []);
 
-  async function onClick() {
+  async function onSubmit({ email, name }) {
     toast.loading('Creating...');
 
     // Signup student user
@@ -79,26 +95,35 @@ function StudentCreate() {
     <>
       {isLoading && <Loading />}
       {!isLoading && (
-        <div className="w-1/3 mx-auto shadow-2xl shadow-blue-300 rounded-box mt-40">
+        <form
+          className="w-1/3 mx-auto shadow-2xl shadow-blue-300 rounded-box mt-40"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="w-3/4 mx-auto pt-4">
             <label className="input input-bordered flex items-center gap-2 my-4">
               Email
               <input
                 type="text"
+                defaultValue="someone@example.com"
                 className="grow"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register('email')}
               />
+              {errors.email && (
+                <ErrorMessage>{errors.email?.message}</ErrorMessage>
+              )}
             </label>
 
             <label className="input input-bordered flex items-center gap-2 my-4">
               Name
               <input
                 type="text"
+                defaultValue="someone"
                 className="grow"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                {...register('name')}
               />
+              {errors.name && (
+                <ErrorMessage>{errors.name?.message}</ErrorMessage>
+              )}
             </label>
 
             <select
@@ -126,11 +151,9 @@ function StudentCreate() {
           </div>
 
           <div className="text-center">
-            <button className="btn btn-primary my-2" onClick={onClick}>
-              Create Student
-            </button>
+            <button className="btn btn-primary my-2">Create Student</button>
           </div>
-        </div>
+        </form>
       )}
     </>
   );

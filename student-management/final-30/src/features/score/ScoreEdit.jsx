@@ -1,14 +1,38 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 import { getScoreByScoreId, updateScore } from '../../services/apiScore';
 import { getStudentByStudentId } from '../../services/apiStudent';
+
 import Loading from '../../ui/Loading';
+import ErrorMessage from '../../ui/ErrorMessage';
 
 function ScoreEdit() {
   const params = useParams();
   const navigate = useNavigate();
+
+  const validationSchema = yup
+    .object({
+      score: yup
+        .number()
+        .typeError('Please type correct number')
+        .integer()
+        .positive()
+        .max(100),
+    })
+    .required();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -50,7 +74,7 @@ function ScoreEdit() {
     fetchData();
   }, []);
 
-  async function onClick() {
+  async function onSubmit({ score }) {
     toast.loading('Updating...');
 
     const newScore = {
@@ -72,7 +96,10 @@ function ScoreEdit() {
     <>
       {isLoading && <Loading />}
       {!isLoading && (
-        <div className="w-1/3 mx-auto shadow-2xl shadow-blue-300 rounded-box mt-40">
+        <form
+          className="w-1/3 mx-auto shadow-2xl shadow-blue-300 rounded-box mt-40"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <h1 className="text-center text-4xl pt-4">{currentStudent.name}</h1>
 
           <div className="w-3/4 mx-auto">
@@ -91,9 +118,12 @@ function ScoreEdit() {
               <input
                 type="number"
                 className="grow"
-                value={score}
-                onChange={(e) => setScore(Number(e.target.value))}
+                defaultValue={score}
+                {...register('score')}
               />
+              {errors.score && (
+                <ErrorMessage>{errors.score?.message}</ErrorMessage>
+              )}
             </label>
 
             <select
@@ -136,11 +166,9 @@ function ScoreEdit() {
           </div>
 
           <div className="text-center">
-            <button className="btn btn-primary my-2" onClick={onClick}>
-              Update Score
-            </button>
+            <button className="btn btn-primary my-2">Update Score</button>
           </div>
-        </div>
+        </form>
       )}
     </>
   );
