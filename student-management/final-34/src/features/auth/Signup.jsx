@@ -2,39 +2,15 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
 
-import { signup as signupApi } from '../../services/apiAuth';
-import { createTeacher as createTeacherApi } from '../../services/apiTeacher';
+import { useSignup } from './useSignup';
 
 import ErrorMessage from '../../ui/ErrorMessage';
 
 function Signup() {
   const navigate = useNavigate();
 
-  const { mutate: createTeacher, isPending: isCreating } = useMutation({
-    mutationFn: createTeacherApi,
-    onSuccess: () => {
-      toast.success('Signup successful, please confirm your email');
-      navigate('/login');
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-
-  const { mutate: signup, isPending: isSigning } = useMutation({
-    mutationFn: ({ email, password }) => signupApi(email, password),
-    onSuccess: (userData) => {
-      createTeacher({ teacher_id: userData.user.id });
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-
-  const isLoading = isCreating || isSigning;
+  const { signup, isLoading } = useSignup();
 
   const validationSchema = yup
     .object({

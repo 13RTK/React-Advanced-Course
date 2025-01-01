@@ -2,26 +2,15 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
 
-import { login as loginApi } from '../../services/apiAuth';
+import { useLogin } from './useLogin';
 
 import ErrorMessage from '../../ui/ErrorMessage';
 
 function Login() {
   const navigate = useNavigate();
 
-  const { mutate: login, isPending: isLogging } = useMutation({
-    mutationFn: ({ email, password }) => loginApi(email, password),
-    onSuccess: () => {
-      toast.success('Login successful');
-      navigate('/');
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+  const { login, isLogging } = useLogin();
 
   const validationSchema = yup
     .object({

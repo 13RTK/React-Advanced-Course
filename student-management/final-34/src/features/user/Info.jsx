@@ -40,6 +40,7 @@ function Info() {
 
       if (!isStudent) {
         const userId = getUserId();
+        // TOHOOK: rebuild with mutation
         const teachers = await getTeacherByTeacherId(userId);
         const teacher = await teachers[0];
 
@@ -80,10 +81,12 @@ function Info() {
     // Update user metadata in supabase
     const supabaseUrl = getConfig('SUPABASE_URL');
     const newAvatarUrl = `${supabaseUrl}/storage/v1/object/public/avatar/public/${avatarFilename}`;
+    // TOHOOK: rebuild with mutation
     const newUserMetadata = await updateUser({ avatar: newAvatarUrl });
 
     const userId = getUserId();
     if (isStudent) {
+      // TOHOOK: rebuild with mutation
       const newStudents = await updateStudent(userId, {
         avatar: newAvatarUrl,
       });

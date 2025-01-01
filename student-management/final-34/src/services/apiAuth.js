@@ -43,6 +43,7 @@ export async function signout() {
 
   if (error) {
     console.log(error.message);
+    throw new Error(error.message);
   }
 }
 
@@ -61,7 +62,7 @@ export async function updateUser(newUserMetadata = {}) {
 
   if (error) {
     console.log(error.message);
-    return;
+    throw new Error(error.message);
   }
 
   return data;
