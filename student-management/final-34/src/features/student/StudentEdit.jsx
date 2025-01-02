@@ -4,20 +4,22 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { toast } from 'sonner';
+import { useMutation } from '@tanstack/react-query';
 
 import {
-  getStudentByStudentId,
-  updateStudent,
+  getStudentByStudentId as getStudentByStudentIdApi,
+  updateStudent as updateStudentApi,
 } from '../../services/apiStudent';
 import { uploadAvatar } from '../../services/apiStorage';
 
 import { getConfig } from '../../utils/configHelper';
+
 import Loading from '../../ui/Loading';
 import ErrorMessage from '../../ui/ErrorMessage';
 
 function StudentEdit() {
-  const [gender, setGender] = useState('male');
-  const [name, setName] = useState('Someone');
+  const params = useParams();
+  const navigate = useNavigate();
 
   const validationSchema = yup
     .object({
@@ -28,21 +30,38 @@ function StudentEdit() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  const params = useParams();
-  const navigate = useNavigate();
-
+  // Student Info Load
+  const [gender, setGender] = useState('male');
   const [currentAvatarUrl, setCurrentAvatarUrl] = useState(
     'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'
   );
-  const [avatarFile, setAvatarFile] = useState(null);
 
+  const { mutate: getStudentByStudentId, isPending: isLoading } = useMutation({
+    mutationFn: ({ id }) => getStudentByStudentIdApi(id),
+    onSuccess: (students) => {
+      const student = students[0];
+
+      setValue('name', student.name);
+      setGender(student.gender);
+      setCurrentAvatarUrl(student.avatar);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  useEffect(() => {
+    getStudentByStudentId({ id: params.id });
+  }, []);
+
+  // Avatar change
+  const [avatarFile, setAvatarFile] = useState(null);
   function handleAvatarChange(event) {
     const file = event.target.files[0];
     setAvatarFile(file);
@@ -51,23 +70,22 @@ function StudentEdit() {
     setCurrentAvatarUrl(newAvatarUrl);
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      setIsLoading(true);
+  // Update Student Info
+  const { mutate: updateStudent, isPending: isUpdating } = useMutation({
+    mutationFn: ({ id, newStudent }) => {
+      updateStudentApi(id, newStudent);
+    },
+    onSuccess: () => {
+      toast.dismiss();
+      toast.success('Successfully updated');
+      navigate('/home/student');
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
-      const students = await getStudentByStudentId(params.id);
-      const student = students[0];
-
-      setName(student.name);
-      setGender(student.gender);
-      setCurrentAvatarUrl(student.avatar);
-
-      setIsLoading(false);
-    }
-
-    fetchData();
-  }, []);
-
+  const [isUploading, setIsUploading] = useState(false);
   async function onSubmit({ name }) {
     toast.loading('Updating...');
 
@@ -77,30 +95,28 @@ function StudentEdit() {
     };
 
     if (avatarFile) {
+      setIsUploading(true);
+
       // Build avatar filename
       const token = getConfig('SUPABASE_TOKEN');
 
       const userToken = JSON.parse(localStorage.getItem(token));
       const avatarFilename = `${userToken.user.email}-${Date.now()}.png`;
 
-      // Upload avatar file
+      // Upload avatar file(do not hookify with useMutation)
       await uploadAvatar(avatarFile, avatarFilename);
 
-      // Build avatar access url
       const supabaseUrl = getConfig('SUPABASE_URL');
-      const avatar = `${supabaseUrl}/storage/v1/object/public/avatar/public/${avatarFilename}`;
+      newStudent.avatar = `${supabaseUrl}/storage/v1/object/public/avatar/public/${avatarFilename}`;
 
-      newStudent.avatar = avatar;
+      setIsUploading(false);
     }
 
     // Update student in supabase
-    const student = await updateStudent(params.id, newStudent);
-    console.log(student);
-
-    toast.dismiss();
-    toast.success('Successfully updated');
-    navigate('/home/student');
+    updateStudent({ id: params.id, newStudent });
   }
+
+  const isUpdatingStudent = isUpdating || isUploading;
 
   return (
     <>
@@ -132,7 +148,7 @@ function StudentEdit() {
               <input
                 type="text"
                 className="grow"
-                defaultValue={name}
+                defaultValue="Someone"
                 {...register('name')}
               />
               {errors.name && (
@@ -152,11 +168,17 @@ function StudentEdit() {
           </div>
 
           <div className="text-center">
-            <button className="btn btn-primary my-2">Update Profile</button>
+            <button
+              className="btn btn-primary my-2"
+              disabled={isUpdatingStudent}
+            >
+              Update Profile
+            </button>
           </div>
         </form>
       )}
     </>
   );
 }
+
 export default StudentEdit;

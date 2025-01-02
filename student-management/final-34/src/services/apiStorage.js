@@ -10,6 +10,6 @@ export async function uploadAvatar(avatarFile, avatarFilename) {
 
   if (error) {
     console.log(error.message);
-    return;
+    throw new Error(error.message);
   }
 }

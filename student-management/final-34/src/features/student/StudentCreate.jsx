@@ -52,6 +52,7 @@ function StudentCreate() {
     async function fetchData() {
       setIsLoading(true);
 
+      // TOHOOK: rebuild with mutation
       const teachers = await getTeacherByTeacherId(userToken.user.id);
       const classInChargeArrData = await JSON.parse(
         teachers[0].class_in_charge
@@ -70,10 +71,12 @@ function StudentCreate() {
     toast.loading('Creating...');
 
     // Signup student user
+    // TOHOOK: rebuild with mutation
     const userData = await signup(email, '123456', { isStudent: true });
     console.log(userData);
 
     // Insert student
+    // TOHOOK: rebuild with mutation
     const students = await createStudent({
       name,
       class: classInfo.split('|')[0],
