@@ -9,13 +9,12 @@ function Add() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  const [_memoList, setMemoList] = useLocalStorage('memo-list');
+  const [memoList, setMemoList] = useLocalStorage('memo-list');
 
   function appendMemo() {
-    setMemoList((memoList) => [
-      ...memoList,
-      { id: Date.now(), title, body: content },
-    ]);
+    const newMemoList = [...memoList, { id: Date.now(), title, body: content }];
+
+    setMemoList(newMemoList);
 
     toast.success('Successfully added!');
 
