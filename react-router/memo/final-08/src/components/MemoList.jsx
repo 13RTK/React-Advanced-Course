@@ -11,9 +11,12 @@ export default function MemoList({ searchItem = '' }) {
   const [filteredMemoList, setFilteredMemoList] = useState(memoList);
 
   function deleteMemo(id) {
-    setMemoList((memoList) =>
-      memoList.filter((memoItem) => memoItem.id !== id)
-    );
+    // Error version because of react-use
+    // setMemoList((memoList) =>
+    //   memoList.filter((memoItem) => memoItem.id !== id)
+    // );
+    const newMemoList = memoList.filter((memoItem) => memoItem.id !== id);
+    setMemoList(newMemoList);
 
     toast.error('Successfully deleted!');
   }
