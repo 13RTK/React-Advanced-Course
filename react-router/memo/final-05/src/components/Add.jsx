@@ -12,6 +12,11 @@ function Add() {
   const [memoList, setMemoList] = useLocalStorage('memo-list');
 
   function appendMemo() {
+    if (title === '' || content === '') {
+      toast.error('You need to fill in both title and content');
+      return;
+    }
+
     const newMemoList = [...memoList, { id: Date.now(), title, body: content }];
 
     setMemoList(newMemoList);
