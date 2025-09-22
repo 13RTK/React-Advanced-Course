@@ -77,7 +77,7 @@ function NavBar() {
           </ul>
         </div>
 
-        <a className="btn btn-ghost text-xl" onClick={() => navigate('/')}>
+        <a className="btn btn-ghost text-xl" onClick={() => navigate('/home/score')}>
           Sunshine
         </a>
       </div>
