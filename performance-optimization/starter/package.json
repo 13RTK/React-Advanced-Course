@@ -1,0 +1,30 @@
+{
+  "name": "list-list-list",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "server": "json-server --watch ./src/data/idol.json",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.14",
+    "@tanstack/react-query": "^5.90.2",
+    "jotai": "^2.15.0",
+    "jotai-devtools": "^0.13.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "tailwindcss": "^4.1.14",
+    "theme-change": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.16",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.4",
+    "daisyui": "^5.1.29",
+    "vite": "^7.1.7"
+  }
+}
