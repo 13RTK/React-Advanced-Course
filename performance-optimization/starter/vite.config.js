@@ -8,6 +8,7 @@ export default defineConfig({
     react({
       babel: {
         presets: ['jotai/babel/preset'],
+        // plugins: ['babel-plugin-react-compiler'],
       },
     }),
     tailwindcss(),
