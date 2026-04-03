@@ -1,16 +1,20 @@
-import About from './components/About';
-import Home from './components/Home';
-import { useState } from 'react';
+import { Outlet, useNavigate } from 'react-router';
 
 function App() {
-  const [isHome, setIsHome] = useState(true);
+  const navigate = useNavigate();
 
   return (
     <>
-      <button type="button" onClick={() => setIsHome((isHome) => !isHome)}>
-        Toggle
+      <button type="button" onClick={() => navigate('/')}>
+        Go Home
       </button>
-      {isHome ? <Home /> : <About />}
+      <button type="button" onClick={() => navigate('/about')}>
+        About
+      </button>
+      {/* <NavLink to="/">Home</NavLink>
+      <br />
+      <NavLink to="/about">About</NavLink> */}
+      <Outlet />
     </>
   );
 }
