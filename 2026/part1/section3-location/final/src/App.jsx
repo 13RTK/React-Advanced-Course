@@ -1,15 +1,24 @@
-import { Outlet, useNavigate } from 'react-router';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  function handleNavigate() {
+    const pathname = location.pathname;
+
+    if (pathname === '/') {
+      navigate('/about');
+      return;
+    }
+
+    navigate('/');
+  }
 
   return (
     <>
-      <button type="button" onClick={() => navigate('/')}>
-        Go Home
-      </button>
-      <button type="button" onClick={() => navigate('/about')}>
-        About
+      <button type="button" onClick={handleNavigate}>
+        Toggle
       </button>
       {/* <NavLink to="/">Home</NavLink>
       <br />
