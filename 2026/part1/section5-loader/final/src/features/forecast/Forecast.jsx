@@ -1,10 +1,12 @@
+import { useRouteLoaderData } from 'react-router';
 import { useForecastWeather } from '../../hooks/useForecastWeather';
 
 import Loading from '../../ui/Loading';
 import AppNav from './AppNav';
 import ForecastList from './ForecastList';
 
-function Forecast({ position }) {
+function Forecast() {
+  const position = useRouteLoaderData('root');
   const { weatherForecastList, isLoading } = useForecastWeather(position);
 
   return (

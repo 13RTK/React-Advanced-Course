@@ -6,11 +6,13 @@ import { useCurrentWeather } from '../../hooks/useCurrentWeather';
 
 import Day from './Day';
 import Loading from '../../ui/Loading';
-import { useNavigate } from 'react-router';
+import { useNavigate, useRouteLoaderData } from 'react-router';
 
-function Home({ position }) {
-  const { temperature, weatherIcon, isLoading } = useCurrentWeather(position);
+function Home() {
   const navigate = useNavigate();
+  const position = useRouteLoaderData('root');
+
+  const { temperature, weatherIcon, isLoading } = useCurrentWeather(position);
 
   return (
     <section className={styles.section}>
