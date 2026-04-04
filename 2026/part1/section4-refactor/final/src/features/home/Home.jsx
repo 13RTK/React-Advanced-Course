@@ -6,9 +6,11 @@ import { useCurrentWeather } from '../../hooks/useCurrentWeather';
 
 import Day from './Day';
 import Loading from '../../ui/Loading';
+import { useNavigate } from 'react-router';
 
-function Home({ setIsHome, position }) {
+function Home({ position }) {
   const { temperature, weatherIcon, isLoading } = useCurrentWeather(position);
+  const navigate = useNavigate();
 
   return (
     <section className={styles.section}>
@@ -19,7 +21,7 @@ function Home({ setIsHome, position }) {
           <Button
             variant="contained"
             size="large"
-            onClick={() => setIsHome(false)}
+            onClick={() => navigate('/forecast')}
           >
             Get Start
           </Button>

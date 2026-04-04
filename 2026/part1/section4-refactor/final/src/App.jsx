@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { useGeolocation } from "./hooks/useGeolocation";
+import { useGeolocation } from './hooks/useGeolocation';
 
-import Container from "./ui/Container";
-import Loading from "./ui/Loading";
+import Container from './ui/Container';
+import Loading from './ui/Loading';
 
-import Forecast from "./features/forecast/Forecast";
-import Home from "./features/home/Home";
+import { Outlet } from 'react-router';
 
 function App() {
   const { getCurrentLocation, isLoading, position } = useGeolocation();
@@ -19,13 +18,15 @@ function App() {
 
   return (
     <Container>
-      {isLoading ? (
+      {/* {isLoading ? (
         <Loading />
       ) : isHome ? (
         <Home setIsHome={setIsHome} position={position} />
       ) : (
         <Forecast setIsHome={setIsHome} position={position} />
-      )}
+      )} */}
+
+      {isLoading ? <Loading /> : <Outlet />}
     </Container>
   );
 }
