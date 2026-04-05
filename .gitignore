@@ -1,5 +1,7 @@
 node_modules
 pnpm-lock.yaml
-.vscode
 *-demo
 dist
+
+.vscode
+.tanstack
