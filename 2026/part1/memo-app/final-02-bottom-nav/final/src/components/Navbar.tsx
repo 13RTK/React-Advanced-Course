@@ -4,7 +4,10 @@ import Typography from '@mui/material/Typography';
 
 export default function Navbar() {
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      sx={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50 }}
+    >
       <Toolbar>
         <Typography
           variant="h6"
