@@ -4,6 +4,7 @@ import { useMemoList } from '../hooks/memoList';
 import { Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import type { MemoItem } from '../types/MemoItem';
+import { toast } from 'sonner';
 
 export default function MemoList({ search = '' }) {
   // const mockMemoList: MemoItem[] = [
@@ -69,8 +70,17 @@ export default function MemoList({ search = '' }) {
   //   },
   // ];
 
-  const { memoList } = useMemoList();
+  const { memoList, setMemoList } = useMemoList();
   const [processedMemoList, setProcessedMemoList] = useState<MemoItem[]>([]);
+
+  function handleDelete(deleteId: number) {
+    const deletedMemoList = memoList?.filter(
+      (memoItem) => memoItem.id !== deleteId,
+    );
+
+    setMemoList(deletedMemoList);
+    toast.success('memo deleted');
+  }
 
   useEffect(() => {
     if (!search) {
@@ -81,7 +91,7 @@ export default function MemoList({ search = '' }) {
       return memo.title.toLowerCase().includes(search.toLowerCase());
     });
     setProcessedMemoList(filteredMemoList || []);
-  }, [search]);
+  }, [search, memoList]);
 
   return (
     <>
@@ -95,7 +105,11 @@ export default function MemoList({ search = '' }) {
 
       <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {processedMemoList.map((memoItem) => (
-          <MemoListItem key={memoItem.id} memoItem={memoItem} />
+          <MemoListItem
+            key={memoItem.id}
+            memoItem={memoItem}
+            onDelete={handleDelete}
+          />
         ))}
       </List>
     </>
