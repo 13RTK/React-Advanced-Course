@@ -2,8 +2,10 @@ import List from '@mui/material/List';
 import MemoListItem from './MemoListItem';
 import { useMemoList } from '../hooks/memoList';
 import { Link } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
+import type { MemoItem } from '../types/MemoItem';
 
-export default function MemoList() {
+export default function MemoList({ search = '' }) {
   // const mockMemoList: MemoItem[] = [
   //   {
   //     id: 1,
@@ -68,10 +70,22 @@ export default function MemoList() {
   // ];
 
   const { memoList } = useMemoList();
+  const [processedMemoList, setProcessedMemoList] = useState<MemoItem[]>([]);
+
+  useEffect(() => {
+    if (!search) {
+      setProcessedMemoList(memoList || []);
+    }
+
+    const filteredMemoList = memoList?.filter((memo) => {
+      return memo.title.toLowerCase().includes(search.toLowerCase());
+    });
+    setProcessedMemoList(filteredMemoList || []);
+  }, [search]);
 
   return (
     <>
-      {memoList?.length === 0 && (
+      {processedMemoList.length === 0 && (
         <h1 style={{ textAlign: 'center' }}>
           There's no memo, try to
           <Link to="/add"> Add </Link>
@@ -80,7 +94,7 @@ export default function MemoList() {
       )}
 
       <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-        {memoList?.map((memoItem) => (
+        {processedMemoList.map((memoItem) => (
           <MemoListItem key={memoItem.id} memoItem={memoItem} />
         ))}
       </List>
