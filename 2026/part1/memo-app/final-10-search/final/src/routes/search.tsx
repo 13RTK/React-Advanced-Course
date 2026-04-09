@@ -1,27 +1,17 @@
-import { TextField } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
-import MemoList from '../components/MemoList';
+import Search from '../components/Search';
+
+type SearchType = {
+  keyword: string;
+};
 
 export const Route = createFileRoute('/search')({
   component: Search,
+
+  validateSearch: (search: Record<string, unknown>): SearchType => {
+    // validate and parse the search params into a typed state
+    return {
+      keyword: (search.keyword as string) || '',
+    };
+  },
 });
-
-function Search() {
-  const [search, setSearch] = useState('');
-
-  return (
-    <main style={{ textAlign: 'center' }}>
-      <TextField
-        sx={{ marginBottom: '10px', marginTop: '10px' }}
-        id="outlined-basic"
-        label="Search"
-        variant="outlined"
-        value={search}
-        onChange={(event) => setSearch(event.target.value)}
-      />
-
-      <MemoList search={search} />
-    </main>
-  );
-}
