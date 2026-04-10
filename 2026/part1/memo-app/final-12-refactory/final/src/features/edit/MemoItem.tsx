@@ -1,8 +1,8 @@
 import { TextField, Button } from '@mui/material';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { useMemoList } from '../hooks/memoList';
-import { Route } from '../routes/memo.$memoId';
+import { useMemoList } from '@/hooks/memoList';
+import { Route } from '@/routes/memo.$memoId';
 import { useNavigate } from '@tanstack/react-router';
 
 function MemoItem() {

@@ -1,7 +1,7 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import BottomNav from '../components/BottomNav';
-import Navbar from '../components/Navbar';
+import BottomNav from '../ui/BottomNav';
+import Navbar from '../ui/Navbar';
 import { Toaster } from 'sonner';
 
 const RootLayout = () => (

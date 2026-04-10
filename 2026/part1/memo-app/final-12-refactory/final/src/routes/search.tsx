@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import Search from '../components/Search';
+import Search from '@/features/search/Search';
 
 type SearchType = {
   keyword: string;

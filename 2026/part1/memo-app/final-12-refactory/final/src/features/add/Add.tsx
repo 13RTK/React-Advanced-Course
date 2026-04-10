@@ -1,7 +1,8 @@
 import { Button, TextField } from '@mui/material';
 import { useState } from 'react';
-import { useMemoList } from '../hooks/memoList';
 import { toast } from 'sonner';
+
+import { useMemoList } from '@/hooks/memoList';
 
 function Add() {
   const [title, setTitle] = useState('');
