@@ -1,3 +1,4 @@
+import CounterNav from './CounterNav';
 import styles from './NavBar.module.css';
 
 function NavBar({
@@ -15,7 +16,8 @@ function NavBar({
       <a href="#" onClick={() => setCurrentComponent('Order')}>
         Order
       </a>
-      <p>Counter {counter}</p>
+      {/* <p>Counter {counter}</p> */}
+      <CounterNav counter={counter} />
     </nav>
   );
 }
