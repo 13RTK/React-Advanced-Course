@@ -1,12 +1,8 @@
-function Home({
-  counter,
-  decrement,
-  increment,
-}: {
-  counter: number;
-  decrement: () => void;
-  increment: () => void;
-}) {
+import { useCounterStore } from '../stores/counter';
+
+function Home() {
+  const { counter, increment, decrement } = useCounterStore();
+
   return (
     <>
       <h1>Counter</h1>

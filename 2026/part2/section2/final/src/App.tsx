@@ -5,26 +5,13 @@ import Home from './components/Home';
 import Order from './components/Order';
 
 function App() {
-  const [counter, setCounter] = useState(0);
   const [currentComponent, setCurrentComponent] = useState('Home');
-
-  function increment() {
-    setCounter(counter + 1);
-  }
-
-  function decrement() {
-    setCounter(counter - 1);
-  }
 
   return (
     <>
-      <NavBar counter={counter} setCurrentComponent={setCurrentComponent} />
+      <NavBar setCurrentComponent={setCurrentComponent} />
       <main className={styles.main}>
-        {currentComponent === 'Home' ? (
-          <Home counter={counter} increment={increment} decrement={decrement} />
-        ) : (
-          <Order />
-        )}
+        {currentComponent === 'Home' ? <Home /> : <Order />}
       </main>
     </>
   );

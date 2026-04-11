@@ -2,10 +2,8 @@ import CounterNav from './CounterNav';
 import styles from './NavBar.module.css';
 
 function NavBar({
-  counter,
   setCurrentComponent,
 }: {
-  counter: number;
   setCurrentComponent: (component: string) => void;
 }) {
   return (
@@ -17,7 +15,7 @@ function NavBar({
         Order
       </a>
       {/* <p>Counter {counter}</p> */}
-      <CounterNav counter={counter} />
+      <CounterNav />
     </nav>
   );
 }
