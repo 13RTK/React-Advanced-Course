@@ -10,7 +10,7 @@ function Search() {
 
   const [search, setSearch] = useState(keyword);
 
-  function handleClick(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const newSearch = event.target.value;
 
     setSearch(newSearch);
@@ -28,7 +28,7 @@ function Search() {
         label="Search"
         variant="outlined"
         value={search}
-        onChange={handleClick}
+        onChange={handleChange}
       />
 
       <MemoList search={search} />
