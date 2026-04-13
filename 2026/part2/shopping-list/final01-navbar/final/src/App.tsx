@@ -1,7 +1,11 @@
-import { Button } from 'primereact/button';
+import Navbar from './components/Navbar';
 
 function App() {
-  return <Button label="Check" icon="pi pi-check" />;
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 }
 
 export default App;
