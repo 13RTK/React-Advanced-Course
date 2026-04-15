@@ -9,12 +9,18 @@ import type { Product } from '../types/Product';
 import type { CartItem } from '../types/CartItem';
 import { useCartList } from '../hooks/cartList';
 import { toast } from 'sonner';
+import { useSetAtom } from 'jotai';
+import { cartItemCounterAtom } from '../atoms/cart';
 
 export default function ShopList() {
   const [products, setProducts] = useState<Product[]>([]);
   const { cartList, setCartList } = useCartList();
 
+  const setCartItemCounter = useSetAtom(cartItemCounterAtom);
+
   useEffect(() => {
+    setCartItemCounter(cartList?.length || 0);
+
     ProductService.getProducts().then((data: Product[]) => setProducts(data));
   }, []);
 
@@ -23,6 +29,8 @@ export default function ShopList() {
 
     setCartList(newCartList);
     toast.success('new item added to cart');
+
+    setCartItemCounter(newCartList.length);
   }
 
   const getSeverity = (product: Product) => {

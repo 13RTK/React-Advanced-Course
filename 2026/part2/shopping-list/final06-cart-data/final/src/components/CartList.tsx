@@ -1,26 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { OrderList } from 'primereact/orderlist';
-import { ProductService } from '../services/ProductService';
-
-interface Product {
-  id: string;
-  code: string;
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-  category: string;
-  quantity: number;
-  inventoryStatus: 'string';
-  rating: number;
-}
+import type { Product } from '../types/Product';
+import { useCartList } from '../hooks/cartList';
+import type { CartItem } from '../types/CartItem';
 
 export default function CartList() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const { cartList } = useCartList();
 
-  useEffect(() => {
-    ProductService.getProductsSmall().then((data: any) => setProducts(data));
-  }, []);
+  const [products, setProducts] = useState<CartItem[]>(cartList || []);
 
   const itemTemplate = (item: Product) => {
     return (

@@ -4,11 +4,14 @@ import { Badge } from 'primereact/badge';
 import { Button } from 'primereact/button';
 import { useContext, useState } from 'react';
 import { PrimeReactContext } from 'primereact/api';
-import { useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { visibleAtom } from '../atoms/visible';
+import { cartItemCounterAtom } from '../atoms/cart';
 
 export default function Navbar() {
   const { changeTheme } = useContext(PrimeReactContext);
+  const cartItemCounter = useAtomValue(cartItemCounterAtom);
+
   const [isDark, setIsDark] = useState(false);
 
   const setVisible = useSetAtom(visibleAtom);
@@ -29,7 +32,7 @@ export default function Navbar() {
     <a className="flex align-items-center p-menuitem-link">
       <span className={item.icon} />
       <span className="mx-2">{item.label}</span>
-      {item.badge && <Badge className="ml-auto" value={item.badge} />}
+      {item.badge > 0 && <Badge className="ml-auto" value={item.badge} />}
       {item.shortcut && (
         <span className="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">
           {item.shortcut}
@@ -41,7 +44,7 @@ export default function Navbar() {
     {
       label: 'Cart',
       icon: 'pi pi-shopping-cart',
-      badge: 3,
+      badge: cartItemCounter,
       template: itemRenderer,
       command: () => {
         setVisible(true);
