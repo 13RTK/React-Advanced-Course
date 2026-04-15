@@ -5,26 +5,25 @@ import { Rating } from 'primereact/rating';
 import { Tag } from 'primereact/tag';
 import { classNames } from 'primereact/utils';
 import { ProductService } from '../services/ProductService';
-
-interface Product {
-  id: string;
-  code: string;
-  name: string;
-  description: string;
-  image: string;
-  price: number;
-  category: string;
-  quantity: number;
-  inventoryStatus: string;
-  rating: number;
-}
+import type { Product } from '../types/Product';
+import type { CartItem } from '../types/CartItem';
+import { useCartList } from '../hooks/cartList';
+import { toast } from 'sonner';
 
 export default function ShopList() {
   const [products, setProducts] = useState<Product[]>([]);
+  const { cartList, setCartList } = useCartList();
 
   useEffect(() => {
     ProductService.getProducts().then((data: Product[]) => setProducts(data));
   }, []);
+
+  function addToCart(newCartItem: CartItem) {
+    const newCartList = [...(cartList || []), newCartItem];
+
+    setCartList(newCartList);
+    toast.success('new item added to cart');
+  }
 
   const getSeverity = (product: Product) => {
     switch (product.inventoryStatus) {
@@ -77,6 +76,15 @@ export default function ShopList() {
                 icon="pi pi-shopping-cart"
                 className="p-button-rounded"
                 disabled={product.inventoryStatus === 'OUTOFSTOCK'}
+                onClick={() =>
+                  addToCart({
+                    id: product.id,
+                    name: product.name,
+                    category: product.category,
+                    price: product.price,
+                    image: product.image,
+                  })
+                }
               ></Button>
             </div>
           </div>
