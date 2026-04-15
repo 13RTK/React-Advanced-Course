@@ -4,10 +4,14 @@ import { Badge } from 'primereact/badge';
 import { Button } from 'primereact/button';
 import { useContext, useState } from 'react';
 import { PrimeReactContext } from 'primereact/api';
+import { useSetAtom } from 'jotai';
+import { visibleAtom } from '../atoms/visible';
 
 export default function Navbar() {
   const { changeTheme } = useContext(PrimeReactContext);
   const [isDark, setIsDark] = useState(false);
+
+  const setVisible = useSetAtom(visibleAtom);
 
   const LIGHT_THEME = 'lara-light-cyan';
   const DARK_THEME = 'lara-dark-cyan';
@@ -39,6 +43,9 @@ export default function Navbar() {
       icon: 'pi pi-shopping-cart',
       badge: 3,
       template: itemRenderer,
+      command: () => {
+        setVisible(true);
+      },
     },
   ];
 
