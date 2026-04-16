@@ -1,5 +1,6 @@
 import { useAtom } from 'jotai';
 import { Dialog } from 'primereact/dialog';
+
 import { visibleAtom } from '../atoms/visible';
 import CartList from './CartList';
 

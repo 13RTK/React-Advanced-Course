@@ -1,12 +1,13 @@
-import { Menubar } from 'primereact/menubar';
-import { InputText } from 'primereact/inputtext';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { PrimeReactContext } from 'primereact/api';
 import { Badge } from 'primereact/badge';
 import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
+import { Menubar } from 'primereact/menubar';
 import { useContext, useState } from 'react';
-import { PrimeReactContext } from 'primereact/api';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { visibleAtom } from '../atoms/visible';
+
 import { cartItemCounterAtom } from '../atoms/cart';
+import { visibleAtom } from '../atoms/visible';
 
 export default function Navbar() {
   const { changeTheme } = useContext(PrimeReactContext);
@@ -63,11 +64,7 @@ export default function Navbar() {
 
   const end = (
     <div className="flex align-items-center gap-2">
-      <InputText
-        placeholder="Search"
-        type="text"
-        className="w-8rem sm:w-auto"
-      />
+      <InputText placeholder="Search" type="text" className="w-8rem sm:w-auto" />
       <Button
         onClick={toggleTheme}
         icon={`pi pi-${isDark ? 'moon' : 'sun'}`}

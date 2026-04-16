@@ -1,8 +1,10 @@
-import { useState } from 'react';
 import { OrderList } from 'primereact/orderlist';
-import type { Product } from '../types/Product';
-import { useCartList } from '../hooks/cartList';
+import { useState } from 'react';
+
 import type { CartItem } from '../types/CartItem';
+import type { Product } from '../types/Product';
+
+import { useCartList } from '../hooks/cartList';
 
 export default function CartList() {
   const { cartList } = useCartList();

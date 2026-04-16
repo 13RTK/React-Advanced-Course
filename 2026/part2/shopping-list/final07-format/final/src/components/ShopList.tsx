@@ -1,16 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useSetAtom } from 'jotai';
 import { Button } from 'primereact/button';
 import { DataView } from 'primereact/dataview';
 import { Rating } from 'primereact/rating';
 import { Tag } from 'primereact/tag';
 import { classNames } from 'primereact/utils';
-import { ProductService } from '../services/ProductService';
-import type { Product } from '../types/Product';
-import type { CartItem } from '../types/CartItem';
-import { useCartList } from '../hooks/cartList';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
-import { useSetAtom } from 'jotai';
+
+import type { CartItem } from '../types/CartItem';
+import type { Product } from '../types/Product';
+
 import { cartItemCounterAtom } from '../atoms/cart';
+import { useCartList } from '../hooks/cartList';
+import { ProductService } from '../services/ProductService';
 
 export default function ShopList() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -53,10 +55,9 @@ export default function ShopList() {
     return (
       <div className="col-12" key={product.id}>
         <div
-          className={classNames(
-            'flex flex-column xl:flex-row xl:align-items-start p-4 gap-4',
-            { 'border-top-1 surface-border': index !== 0 },
-          )}
+          className={classNames('flex flex-column xl:flex-row xl:align-items-start p-4 gap-4', {
+            'border-top-1 surface-border': index !== 0,
+          })}
         >
           <img
             className="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"
@@ -72,10 +73,7 @@ export default function ShopList() {
                   <i className="pi pi-tag"></i>
                   <span className="font-semibold">{product.category}</span>
                 </span>
-                <Tag
-                  value={product.inventoryStatus}
-                  severity={getSeverity(product)}
-                ></Tag>
+                <Tag value={product.inventoryStatus} severity={getSeverity(product)}></Tag>
               </div>
             </div>
             <div className="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
@@ -113,12 +111,7 @@ export default function ShopList() {
 
   return (
     <div className="card">
-      <DataView
-        value={products}
-        listTemplate={listTemplate}
-        paginator
-        rows={5}
-      />
+      <DataView value={products} listTemplate={listTemplate} paginator rows={5} />
     </div>
   );
 }
