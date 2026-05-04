@@ -1,0 +1,3 @@
+.editor :global(.bn-editor) {
+  background-color: var(--color-base-100);
+}
