@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+@plugin "daisyui";
+
+@import '@neondatabase/neon-js/ui/tailwind';
+
+@layer neon-auth {
+  * {
+    border-color: revert-layer;
+    outline-color: revert-layer;
+  }
+
+  body {
+    color: revert-layer;
+  }
+}
+
+.auth-page {
+  * {
+    border-color: var(--neon-border);
+    outline-color: var(--neon-ring);
+  }
+
+  body {
+    color: var(--neon-foreground);
+  }
+}
+
+.sidebar-primary-item {
+  background-color: var(--color-secondary);
+}
