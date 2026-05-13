@@ -11,9 +11,8 @@ import { useEditor } from './editor';
 import { useEffect } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import { editorPublishSignalAtom } from '../atoms/editor';
-import { buildArticleInsert, isEditorEmpty } from '../utils/editorHelper';
+import { isEditorEmpty } from '../utils/editorHelper';
 import { userAtom } from '../atoms/user';
-import { insertArticle } from '../services/apiArticle';
 import { usePublish } from './publish';
 
 function ArticleEditor() {

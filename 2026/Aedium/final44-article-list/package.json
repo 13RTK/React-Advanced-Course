@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
     "@blocknote/core": "^0.49.0",
@@ -20,6 +21,7 @@
     "@supabase/supabase-js": "^2.105.3",
     "@tailwindcss/vite": "4.3.0",
     "@tanstack/react-query": "^5.100.5",
+    "@tanstack/react-query-devtools": "^5.100.10",
     "@tanstack/react-router": "^1.168.23",
     "@tanstack/react-router-devtools": "^1.166.13",
     "es-toolkit": "^1.46.1",

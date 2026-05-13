@@ -1,4 +1,4 @@
-import type { Block, BlockNoteEditor, StyledText } from '@blocknote/core';
+import type { Block, BlockNoteEditor } from '@blocknote/core';
 import type { InsertArticle } from '../types/Article';
 
 type BlockContent = Block['content'];
@@ -60,7 +60,7 @@ export function buildArticleInsert(
   }
 
   return {
-    authorId: userId,
+    author_id: userId,
     title,
     content: JSON.stringify(contentBlock),
   };

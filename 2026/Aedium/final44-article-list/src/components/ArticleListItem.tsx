@@ -1,6 +1,7 @@
 import { HeartIcon } from '@phosphor-icons/react';
+import type { Article } from '../types/Article';
 
-function ArticleListItem() {
+function ArticleListItem({ article }: { article: Article }) {
   return (
     <li className="list-row h-40">
       <div>
@@ -12,7 +13,7 @@ function ArticleListItem() {
       <div>
         {/* Title */}
         <div className="text-2xl sm:text-5xl font-bold font-serif">
-          Dio Lupa
+          {article.title}
         </div>
 
         {/* Content brief */}
