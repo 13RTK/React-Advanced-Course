@@ -1,9 +1,9 @@
-import { BlockNoteView } from '@blocknote/mantine';
 import { useCreateBlockNote } from '@blocknote/react';
 import { Route as ArticleRoute } from '../routes/_app/articles.$articleId';
 import { useQuery } from '@tanstack/react-query';
 import { getArticleById } from '../services/apiArticle';
 import Loading from './Loading';
+import AppEditor from './AppEditor';
 
 function Article() {
   const { articleId } = ArticleRoute.useParams();
@@ -27,8 +27,9 @@ function Article() {
 
   return (
     <>
-      <h1 className="text-center text-7xl font-serif">{article?.title}</h1>
-      <BlockNoteView editor={editor} editable={false} />
+      <h1 className="text-center text-7xl font-serif mb-8">{article?.title}</h1>
+
+      <AppEditor editor={editor} editable={false} />
     </>
   );
 }
