@@ -14,6 +14,19 @@ export async function getAllArticles() {
   return data;
 }
 
+export async function getArticleById(articleId: number) {
+  const { data, error } = await client
+    .from(ARTICLE_TABLE_NAME)
+    .select('*')
+    .eq('id', articleId);
+
+  if (error) {
+    throw error;
+  }
+
+  return data[0];
+}
+
 export async function insertArticle(insertArticle: InsertArticle) {
   const { data, error } = await client
     .from(ARTICLE_TABLE_NAME)
