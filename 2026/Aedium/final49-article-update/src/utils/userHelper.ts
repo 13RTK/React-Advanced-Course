@@ -1,5 +1,5 @@
 import { authClient } from './neon';
-import type { User } from '../types/User';
+import type { User } from '@/types/User';
 
 export async function getUserProfile(): Promise<User | undefined> {
   const { data, error } = await authClient.getSession();

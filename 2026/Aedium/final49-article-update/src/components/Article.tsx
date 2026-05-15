@@ -1,7 +1,7 @@
 import { useCreateBlockNote } from '@blocknote/react';
-import { Route as ArticleRoute } from '../routes/_app/articles.$articleId';
+import { Route as ArticleRoute } from '@/routes/_app/articles.$articleId';
 import { useQuery } from '@tanstack/react-query';
-import { getArticleById } from '../services/apiArticle';
+import { getArticleById } from '@/services/apiArticle';
 import Loading from './Loading';
 import AppEditor from './AppEditor';
 import {

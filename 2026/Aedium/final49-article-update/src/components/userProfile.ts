@@ -1,9 +1,9 @@
 import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { authClient } from '../utils/neon';
-import { getUserProfile } from '../utils/userHelper';
-import type { User } from '../types/User';
+import { authClient } from '@/utils/neon';
+import { getUserProfile } from '@/utils/userHelper';
+import type { User } from '@/types/User';
 import { useUploadAvatar } from './userAvatar';
 
 const SUPABASE_PROJECT_URL = import.meta.env.VITE_SUPABASE_PROJECT_URL;

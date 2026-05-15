@@ -4,9 +4,9 @@ import { useDraft } from './draft';
 import { useEditor } from './editor';
 import { useEffect } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
-import { editorPublishSignalAtom } from '../atoms/editor';
-import { isEditorEmpty } from '../utils/editorHelper';
-import { userAtom } from '../atoms/user';
+import { editorPublishSignalAtom } from '@/atoms/editor';
+import { isEditorEmpty } from '@/utils/editorHelper';
+import { userAtom } from '@/atoms/user';
 import { usePublish } from './publish';
 import AppEditor from './AppEditor';
 

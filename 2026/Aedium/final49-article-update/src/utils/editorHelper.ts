@@ -1,5 +1,5 @@
 import type { Block, BlockNoteEditor } from '@blocknote/core';
-import type { InsertArticle } from '../types/Article';
+import type { InsertArticle } from '@/types/Article';
 
 type BlockContent = Block['content'];
 

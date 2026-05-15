@@ -5,7 +5,7 @@ import {
 } from '@neondatabase/neon-js/auth/react';
 import { NotePencilIcon } from '@phosphor-icons/react';
 import { useLocation, useNavigate } from '@tanstack/react-router';
-import { Route as editorRoute } from '../routes/_app/_protected/editor';
+import { Route as editorRoute } from '@/routes/_app/_protected/editor';
 import { useAtomValue, useSetAtom } from 'jotai';
 import {
   editorEmptySignalAtom,

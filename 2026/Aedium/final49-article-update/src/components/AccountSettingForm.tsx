@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import type { User } from '../types/User';
+import type { User } from '@/types/User';
 import Avatar from './Avatar';
 import { useUserUpdate } from './userProfile';
 

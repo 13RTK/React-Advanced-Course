@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import type { User } from '../types/User';
+import type { User } from '@/types/User';
 import { useMutation } from '@tanstack/react-query';
-import { supabase } from '../utils/supabase';
+import { supabase } from '@/utils/supabase';
 import { toast } from 'sonner';
 
 export function useUploadAvatar(currentAvatarFile: File | null) {

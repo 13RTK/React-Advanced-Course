@@ -1,5 +1,5 @@
 import { HeartIcon } from '@phosphor-icons/react';
-import type { Article } from '../types/Article';
+import type { Article } from '@/types/Article';
 import { Link } from '@tanstack/react-router';
 
 function ArticleListItem({ article }: { article: Article }) {

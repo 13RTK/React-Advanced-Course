@@ -1,5 +1,5 @@
-import type { InsertArticle } from '../types/Article';
-import { client } from '../utils/neon';
+import type { InsertArticle } from '@/types/Article';
+import { client } from '@/utils/neon';
 
 const ARTICLE_TABLE_NAME = 'article';
 

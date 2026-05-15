@@ -1,6 +1,6 @@
 import { createClient } from '@neondatabase/neon-js';
 import { BetterAuthReactAdapter } from '@neondatabase/neon-js/auth/react';
-import type { Database } from '../types/database';
+import type { Database } from '@/types/database';
 
 export const client = createClient<Database>({
   auth: {

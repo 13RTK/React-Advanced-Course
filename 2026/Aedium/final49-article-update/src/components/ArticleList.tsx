@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import ArticleListItem from './ArticleListItem';
-import { getAllArticles } from '../services/apiArticle';
+import { getAllArticles } from '@/services/apiArticle';
 import Loading from './Loading';
 
 function ArticleList() {

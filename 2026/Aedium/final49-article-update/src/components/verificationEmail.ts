@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { authClient } from '../utils/neon';
-import { getUserProfile } from '../utils/userHelper';
+import { authClient } from '@/utils/neon';
+import { getUserProfile } from '@/utils/userHelper';
 import { type UseNavigateResult } from '@tanstack/react-router';
 
 export function useSendVerificationEmail(
