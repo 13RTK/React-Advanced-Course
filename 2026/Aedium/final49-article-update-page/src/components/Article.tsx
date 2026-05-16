@@ -11,6 +11,7 @@ import {
   TrashIcon,
 } from '@phosphor-icons/react';
 import { SignedIn } from '@neondatabase/neon-js/auth/react';
+import { Link } from '@tanstack/react-router';
 
 function Article() {
   const { articleId } = ArticleRoute.useParams();
@@ -51,10 +52,16 @@ function Article() {
                 <BookmarkIcon size={24} weight="thin" />
               </a>
             </li>
+            {/* Edit */}
             <li>
-              <a className="tooltip bg-blue-600 mx-1" data-tip="Edit">
+              <Link
+                to="/articles/edit/$articleId"
+                params={{ articleId }}
+                className="tooltip bg-blue-600 mx-1"
+                data-tip="Edit"
+              >
                 <PencilCircleIcon size={24} weight="thin" />
-              </a>
+              </Link>
             </li>
             <li>
               <a className="tooltip bg-red-600 mx-1" data-tip="Delete">

@@ -1,5 +1,3 @@
-import RequireVerifiedEmail from './RequireVerifiedEmail';
-
 import { useDraft } from './draft';
 import { useEditor } from './editor';
 import { useEffect } from 'react';
@@ -40,17 +38,7 @@ function ArticleEditor() {
     }
   }, [editorPublishSignal]);
 
-  return (
-    <RequireVerifiedEmail>
-      {/* <BlockNoteView
-        onChange={handleEditorChange}
-        className={styles.editor}
-        editor={editor}
-      /> */}
-
-      <AppEditor editor={editor} onChange={handleEditorChange} />
-    </RequireVerifiedEmail>
-  );
+  return <AppEditor editor={editor} onChange={handleEditorChange} />;
 }
 
 export default ArticleEditor;

@@ -12,6 +12,7 @@ import {
   editorPublishSignalAtom,
   isEditorEmptyAtom,
 } from '../atoms/editor';
+import { Route as editRoute } from '@/routes/_app/_protected/articles.edit.$articleId';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ function Navbar() {
   const setEditorPublishSignal = useSetAtom(editorPublishSignalAtom);
 
   const isEditorPage = location.pathname === editorRoute.to;
+  const isEditPage = location.pathname.includes(editRoute.to.split('$')[0]);
 
   return (
     <nav className="max-lg:collapse bg-base-200 shadow-sm w-full rounded-md">
@@ -74,7 +76,7 @@ function Navbar() {
         {/* Login button */}
         <div className="navbar-end">
           <SignedIn>
-            {!isEditorPage && (
+            {!isEditorPage && !isEditPage && (
               <button
                 className="btn btn-sm hidden sm:inline-flex sm:btn-md mr-1 btn-ghost"
                 onClick={() => navigate({ to: '/editor' })}
@@ -98,6 +100,13 @@ function Navbar() {
                   onClick={() => setEditorEmptySignal((pre) => pre + 1)}
                 >
                   Discard draft
+                </button>
+              </>
+            )}
+            {isEditPage && (
+              <>
+                <button className="btn btn-accent btn-sm sm:btn-md mr-1">
+                  Update
                 </button>
               </>
             )}
