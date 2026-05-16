@@ -6,7 +6,7 @@ import { editorPublishSignalAtom } from '@/atoms/editor';
 import { isEditorEmpty } from '@/utils/editorHelper';
 import { userAtom } from '@/atoms/user';
 import { usePublish } from './publish';
-import AppEditor from './AppEditor';
+import AppEditor from '@/ui/AppEditor';
 
 function ArticleEditor() {
   const { draft, setDraft, saveDraft } = useDraft();

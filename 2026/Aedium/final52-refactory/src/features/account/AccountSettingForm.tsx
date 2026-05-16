@@ -1,9 +1,9 @@
 import { Link } from '@tanstack/react-router';
 import type { User } from '@/types/User';
-import Avatar from './Avatar';
-import { useUserUpdate } from './userProfile';
+import Avatar from '@/ui/Avatar';
+import { useUserUpdate } from '@/hooks/userProfile';
 
-import { useChangeAvatar, useUploadAvatar } from './userAvatar';
+import { useChangeAvatar, useUploadAvatar } from '../article/userAvatar';
 
 function AccountSettingForm({ user }: { user: User }) {
   const { avatarURL, currentAvatarFile, handleImageChange } =

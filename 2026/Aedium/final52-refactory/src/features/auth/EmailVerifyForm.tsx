@@ -5,7 +5,7 @@ import {
   useVerifyEmailCode,
 } from './verificationEmail';
 import { SignedIn } from '@neondatabase/neon-js/auth/react';
-import RequireNotVerifiedEmail from './RequireNotVerifiedEmail';
+import RequireNotVerifiedEmail from '@/ui/RequireNotVerifiedEmail';
 
 function EmailVerifyForm() {
   const navigate = useNavigate();

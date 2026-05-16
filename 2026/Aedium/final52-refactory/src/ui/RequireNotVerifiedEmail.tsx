@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-router';
-import { useUserProfile } from './userProfile';
+import { useUserProfile } from '../hooks/userProfile';
 import { useEffect } from 'react';
 import Loading from './Loading';
 

@@ -1,6 +1,9 @@
-import AppEditor from '@/components/AppEditor';
-import { useCurrentArticle, useUpdateArticle } from '@/components/article';
-import Loading from '@/components/Loading';
+import AppEditor from '@/ui/AppEditor';
+import {
+  useCurrentArticle,
+  useUpdateArticle,
+} from '@/features/article/article';
+import Loading from '@/ui/Loading';
 
 import { Route as articleEditRoute } from '@/routes/_app/_protected/articles.edit.$articleId';
 import { isEditorEmpty } from '@/utils/editorHelper';

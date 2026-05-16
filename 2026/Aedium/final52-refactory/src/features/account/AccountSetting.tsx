@@ -1,4 +1,4 @@
-import { useUserProfile } from './userProfile';
+import { useUserProfile } from '@/hooks/userProfile';
 import AccountSettingForm from './AccountSettingForm';
 
 function AccountSetting() {

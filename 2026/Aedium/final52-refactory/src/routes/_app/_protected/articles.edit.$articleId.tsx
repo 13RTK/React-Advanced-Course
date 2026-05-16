@@ -1,4 +1,4 @@
-import ArticleEdit from '@/components/ArticleEdit';
+import ArticleEdit from '@/features/article/ArticleEdit';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute(

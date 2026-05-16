@@ -1,4 +1,4 @@
-import Navbar from './Navbar';
+import Navbar from '@/ui/Navbar';
 import Sidebar from './Sidebar';
 
 function RootLayout({ children }: { children: React.ReactNode }) {

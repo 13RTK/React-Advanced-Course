@@ -1,9 +1,9 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
-import RootLayout from '@/components/RootLayout';
+import RootLayout from '@/ui/RootLayout';
 import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import { userAtom } from '@/atoms/user';
-import { useUserProfile } from '@/components/userProfile';
+import { useUserProfile } from '@/hooks/userProfile';
 
 export const Route = createFileRoute('/_app')({
   component: RouteComponent,

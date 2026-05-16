@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { authClient } from '@/utils/neon';
 import { getUserProfile } from '@/utils/userHelper';
 import type { User } from '@/types/User';
-import { useUploadAvatar } from './userAvatar';
+import { useUploadAvatar } from '@/features/article/userAvatar';
 
 const SUPABASE_PROJECT_URL = import.meta.env.VITE_SUPABASE_PROJECT_URL;
 
