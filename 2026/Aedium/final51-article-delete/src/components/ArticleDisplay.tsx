@@ -11,10 +11,12 @@ import {
   TrashIcon,
 } from '@phosphor-icons/react';
 import { SignedIn } from '@neondatabase/neon-js/auth/react';
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
+import { useDeleteArticle } from '@/components/article';
 
 function ArticleDisplay() {
   const { articleId } = ArticleRoute.useParams();
+  const navigate = useNavigate();
 
   const editor = useCreateBlockNote();
 
@@ -28,6 +30,8 @@ function ArticleDisplay() {
       return article;
     },
   });
+
+  const { deleteArticleById, isDeleting } = useDeleteArticle();
 
   if (isLoading) {
     return <Loading />;
@@ -63,10 +67,26 @@ function ArticleDisplay() {
                 <PencilCircleIcon size={24} weight="thin" />
               </Link>
             </li>
+
+            {/* Delete */}
             <li>
-              <a className="tooltip bg-red-600 mx-1" data-tip="Delete">
+              <button
+                onClick={() =>
+                  deleteArticleById(
+                    { articleId: Number(articleId) },
+                    {
+                      onSuccess: () => {
+                        navigate({ to: '/' });
+                      },
+                    },
+                  )
+                }
+                className="tooltip bg-red-600 mx-1"
+                data-tip="Delete"
+                disabled={isDeleting}
+              >
                 <TrashIcon size={24} weight="thin" />
-              </a>
+              </button>
             </li>
           </ul>
         </div>

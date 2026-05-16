@@ -1,5 +1,9 @@
 import { editUpdateSignalAtom } from '@/atoms/editor';
-import { getArticleById, updateArticleById } from '@/services/apiArticle';
+import {
+  deleteArticleById as deleteArticleByIdApi,
+  getArticleById,
+  updateArticleById,
+} from '@/services/apiArticle';
 import type { Article } from '@/types/Article';
 import { buildArticleInsert } from '@/utils/editorHelper';
 import type { BlockNoteEditor } from '@blocknote/core';
@@ -68,5 +72,27 @@ export function useUpdateArticle() {
     updateArticle,
     isUpdating,
     editUpdateSignal,
+  };
+}
+
+export function useDeleteArticle() {
+  const { mutate: deleteArticleById, isPending: isDeleting } = useMutation({
+    mutationKey: ['delete-article'],
+    mutationFn: async ({ articleId }: { articleId: number }) => {
+      await deleteArticleByIdApi(articleId);
+    },
+
+    onSuccess: () => {
+      toast.success('Article deleted successfully!');
+    },
+
+    onError: (error) => {
+      toast.error(error.message || 'Error while deleting article');
+    },
+  });
+
+  return {
+    deleteArticleById,
+    isDeleting,
   };
 }

@@ -58,3 +58,14 @@ export async function updateArticleById(
   console.log(data);
   return data;
 }
+
+export async function deleteArticleById(articleId: number) {
+  const { error } = await client
+    .from(ARTICLE_TABLE_NAME)
+    .delete()
+    .eq('id', articleId);
+
+  if (error) {
+    throw error;
+  }
+}
