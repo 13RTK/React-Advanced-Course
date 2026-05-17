@@ -28,3 +28,7 @@
 .sidebar-primary-item {
   background-color: var(--color-secondary);
 }
+
+.content-layout-h {
+  @apply min-h-[calc(100dvh-4rem)];
+}

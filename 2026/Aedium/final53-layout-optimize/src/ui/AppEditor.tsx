@@ -1,7 +1,7 @@
 import { type BlockNoteEditor } from '@blocknote/core';
 import { BlockNoteView } from '@blocknote/mantine';
 
-import styles from './ArticleEditor.module.css';
+import styles from '@/features/article/ArticleEditor.module.css';
 import '@blocknote/mantine/style.css';
 
 import '@blocknote/core/fonts/inter.css';

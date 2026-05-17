@@ -54,11 +54,7 @@ function AccountSettingForm({ user }: { user: User }) {
         disabled={isUpdating}
       />
 
-      <Link
-        className="link link-secondary text-right"
-        to="/auth/$pathname"
-        params={{ pathname: 'forgot-password' }}
-      >
+      <Link className="link link-secondary text-right" to="/account/security">
         reset password
       </Link>
 
