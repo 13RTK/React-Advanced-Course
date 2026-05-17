@@ -1,0 +1,3 @@
+allowBuilds:
+  "@sentry-internal/node-cpu-profiler": true
+  core-js: true
